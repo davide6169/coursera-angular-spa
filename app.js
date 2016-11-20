@@ -11,10 +11,10 @@
   function ToBuyController($scope) {
     $scope.toBuy = this;
 
-    toBuy.items = ShoppingListCheckOffService.getItemsToBuy();
-    toBuy.message = ShoppingListCheckOffService.getMessageToBuy();
+    $scope.toBuy.items = ShoppingListCheckOffService.getItemsToBuy();
+    $scope.toBuy.message = ShoppingListCheckOffService.getMessageToBuy();
 
-    toBuy.moveItem = function(itemIndex) {
+    $scope.toBuy.moveItem = function(itemIndex) {
       ShoppingListCheckOffService.moveItem(itemIndex);
     };
   };
@@ -24,8 +24,8 @@
   function AlreadyBoughtController($scope) {
     $scope.alreadyBought = this;
 
-    alreadyBought.items = ShoppingListCheckOffService.getItemsAlreadyBought();
-    alreadyBought.message = ShoppingListCheckOffService.getMessageAlreadyBought();
+    $scope.alreadyBought.items = ShoppingListCheckOffService.getItemsAlreadyBought();
+    $scope.alreadyBought.message = ShoppingListCheckOffService.getMessageAlreadyBought();
   };
 
   function ShoppingListCheckOffService() {
