@@ -1,34 +1,90 @@
 (function(){
   'use strict';
 
-  angular.module('LunchCheck',[])
-  .controller('LunchCheckController',LunchCheckController);
+  angular.module('ShoppingListCheckOff',[])
+  .controller('ToBuyController',ToBuyController)
+  .controller('AlreadyBoughtController',AlreadyBoughtController)
+  .service('ShoppingListCheckOffService',ShoppingListCheckOffService);
 
-  LunchCheckController.$inject = ['$scope','$filter'];
+  ToBuyController.$inject = ['$scope','ShoppingListCheckOffService'];
   
-  function LunchCheckController($scope,$filter) {
-    $scope.menu = "";
-    $scope.message = "";
+  function ToBuyController($scope) {
+    $scope.toBuy = this;
 
-    $scope.checkIfTooMuch = function() {
-      $scope.message = evalMessage($scope.menu); 
+    toBuy.items = ShoppingListCheckOffService.getItemsToBuy();
+    toBuy.message = ShoppingListCheckOffService.getMessageToBuy();
+
+    toBuy.moveItem = function(itemIndex) {
+      ShoppingListCheckOffService.moveItem(itemIndex);
+    };
+  };
+
+  AlreadyBoughtController.$inject = ['$scope','ShoppingListCheckOffService'];
+
+  function AlreadyBoughtController($scope) {
+    $scope.alreadyBought = this;
+
+    alreadyBought.items = ShoppingListCheckOffService.getItemsAlreadyBought();
+    alreadyBought.message = ShoppingListCheckOffService.getMessageAlreadyBought();
+  };
+
+  function ShoppingListCheckOffService() {
+    var service = this;
+
+    var itemsToBuy = [
+      {
+        name: "Cookies",
+        quantity: 10
+      },
+      {
+        name: "Ice Creams",
+        quantity: 8
+      },
+      {
+        name: "Chocolates",
+        quantity: 15
+      },
+      {
+        name: "Pies",
+        quantity: 3
+      },
+      {
+        name: "Pizza",
+        quantity: 5 
+      }
+    ];
+
+    var itemsAlreadyBought = [];
+
+    var messageToBuy = false;
+    var messageAlreadyBought = true;
+
+    service.getItemsToBuy = function() {
+      return itemsToBuy;
     };
 
-    function evalMessage(string) {
-      var messageString = "";
-
-      var items = string.split(",");
-
-      if (string.length == 0) {
-        messageString = "Please enter data first";
-      } else if (items.length <= 3) {
-        messageString = "Enjoy!";
-      } else if (items.length > 3) {
-        messageString = "Too much!";
-      } 
-
-      return messageString;
+    service.getItemsAlreadyBought = function() {
+      return itemsAlreadyBought;
     };
-  }
+
+    service.getMessageToBuy = function() {
+      return messageToBuy;
+    };
+
+    service.getMessageAlreadyBought = function() {
+      return messageAlreadyBought;
+    };
+
+    service.moveItem = function (itemIndex) {
+      if(itemsToBuy.length > 0) {
+        itemsAlreadyBought.push(itemsToBuy[itemIndex]);
+        itemsToBuy.splice(itemIndex,1);
+
+        messageAlreadyBought = false;
+      } else {
+        messageToBuy = true;
+      }
+    };
+  };
 
 })();
