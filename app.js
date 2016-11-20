@@ -8,11 +8,10 @@
 
   ToBuyController.$inject = ['$scope','ShoppingListCheckOffService'];
   
-  function ToBuyController($scope) {
+  function ToBuyController($scope,ShoppingListCheckOffService) {
     $scope.toBuy = this;
 
     $scope.toBuy.items = ShoppingListCheckOffService.getItemsToBuy();
-    $scope.toBuy.message = ShoppingListCheckOffService.getMessageToBuy();
 
     $scope.toBuy.moveItem = function(itemIndex) {
       ShoppingListCheckOffService.moveItem(itemIndex);
@@ -21,11 +20,10 @@
 
   AlreadyBoughtController.$inject = ['$scope','ShoppingListCheckOffService'];
 
-  function AlreadyBoughtController($scope) {
+  function AlreadyBoughtController($scope,ShoppingListCheckOffService) {
     $scope.alreadyBought = this;
 
     $scope.alreadyBought.items = ShoppingListCheckOffService.getItemsAlreadyBought();
-    $scope.alreadyBought.message = ShoppingListCheckOffService.getMessageAlreadyBought();
   };
 
   function ShoppingListCheckOffService() {
@@ -56,9 +54,6 @@
 
     var itemsAlreadyBought = [];
 
-    var messageToBuy = false;
-    var messageAlreadyBought = true;
-
     service.getItemsToBuy = function() {
       return itemsToBuy;
     };
@@ -67,23 +62,11 @@
       return itemsAlreadyBought;
     };
 
-    service.getMessageToBuy = function() {
-      return messageToBuy;
-    };
-
-    service.getMessageAlreadyBought = function() {
-      return messageAlreadyBought;
-    };
-
     service.moveItem = function (itemIndex) {
       if(itemsToBuy.length > 0) {
         itemsAlreadyBought.push(itemsToBuy[itemIndex]);
         itemsToBuy.splice(itemIndex,1);
-
-        messageAlreadyBought = false;
-      } else {
-        messageToBuy = true;
-      }
+      } 
     };
   };
 
