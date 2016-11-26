@@ -44,7 +44,7 @@
 
         if(searchTerm.length > 0) {
           for(var i=0;i<response.data.menu_items.length;i++) {
-            if(response.data.menu_items[i].description.toLowerCase().indexOf(searchTerm) >= 0) {
+            if(response.data.menu_items[i].description.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
               foundItems.push(response.data.menu_items[i]);
             }
           }
