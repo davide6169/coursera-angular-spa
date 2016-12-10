@@ -1,0 +1,10 @@
+<ul class="breadcrumb">
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="categories">Categories</a></li>
+    <li class="active">{{ctrl.items.category.name}}</li>
+</ul>
+
+
+https://github.com/jhu-ep-coursera/restaurant-server
+
+https://davide6169-course5.herokuapp.com/menu_items.json
