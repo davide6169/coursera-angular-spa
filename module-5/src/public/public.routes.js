@@ -9,16 +9,28 @@ angular.module('public')
  */
 routeConfig.$inject = ['$stateProvider'];
 function routeConfig ($stateProvider) {
+
+  // ------------------------
   // Routes
+  // ------------------------
+  // public.home
+  // public.menu
+  // public.menuitems
+  // public.myinfo
+  // public.signup
+  // ------------------------
   $stateProvider
     .state('public', {
       absract: true,
       templateUrl: 'src/public/public.html'
     })
+    // ------------------------
     .state('public.home', {
       url: '/',
       templateUrl: 'src/public/home/home.html'
     })
+    // ------------------------
+    // ------------------------
     .state('public.menu', {
       url: '/menu',
       templateUrl: 'src/public/menu/menu.html',
@@ -30,6 +42,8 @@ function routeConfig ($stateProvider) {
         }]
       }
     })
+    // ------------------------
+    // ------------------------
     .state('public.menuitems', {
       url: '/menu/{category}',
       templateUrl: 'src/public/menu-items/menu-items.html',
@@ -40,6 +54,28 @@ function routeConfig ($stateProvider) {
           return MenuService.getMenuItems($stateParams.category);
         }]
       }
+    })
+    // ------------------------
+    // ------------------------
+    .state('public.myinfo', {
+      url: '/myinfo',
+      templateUrl: 'src/public/myinfo/myinfo.html',
+      controller: 'MyInfoController',
+      controllerAs: 'myInfoCtrl',
+      resolve: {
+        info: ['MyInfoService', function(MyInfoService) {
+          return MyInfoService.getInfo();
+        }]
+      }
+    })
+    // ------------------------
+    // ------------------------
+    .state('public.signup', {
+      url: '/signup',
+      templateUrl: 'src/public/signup/signup.html',
+      controller: 'SignUpController',
+      controllerAs: 'signUpCtrl'
     });
+    // ------------------------
 }
 })();
